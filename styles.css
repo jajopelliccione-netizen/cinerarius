@@ -168,8 +168,9 @@ a { color: inherit; text-decoration: none; transition: color .25s var(--ease); }
 .salon-actions { display: flex; gap: 12px; }
 
 /* ---------- Team ---------- */
-.team-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 22px; }
+.team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px 28px; max-width: 940px; margin: 0 auto; }
 .team-card { text-align: center; }
+.bio { font-size: .86rem; color: var(--muted); margin-top: 10px; line-height: 1.5; }
 .team-photo {
   aspect-ratio: 3 / 4; border-radius: var(--radius); margin-bottom: 18px; border: 1px solid var(--line);
   background:
