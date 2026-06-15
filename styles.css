@@ -119,12 +119,12 @@ a { color: inherit; text-decoration: none; transition: color .25s var(--ease); }
   35%  { opacity: 0; transform: scale(1.12); }
   100% { opacity: 0; }
 }
-/* readable overlay (light theme): solid on the text side, photo peeks on the right */
+/* even, uniform veil over the photos so they read the same across the hero */
 .hero-bg {
   position: absolute; inset: 0; z-index: 1;
   background:
-    linear-gradient(100deg, rgba(255,255,255,0.97) 0%, rgba(255,255,255,0.90) 36%, rgba(255,255,255,0.64) 72%, rgba(255,255,255,0.46) 100%),
-    radial-gradient(120% 80% at 88% -10%, var(--sea-soft), transparent 55%);
+    radial-gradient(120% 90% at 85% 0%, rgba(33,178,198,0.10), transparent 55%),
+    linear-gradient(rgba(255,255,255,0.82), rgba(255,255,255,0.82));
 }
 .hero-inner { position: relative; z-index: 2; padding: 120px 24px 100px; }
 .eyebrow { font-family: var(--font-display); text-transform: uppercase; letter-spacing: .35em; font-size: .78rem; color: var(--sea-deep); margin-bottom: 24px; }
