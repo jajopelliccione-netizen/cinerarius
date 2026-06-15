@@ -217,13 +217,16 @@ img.team-photo { width: 100%; object-fit: cover; object-position: center 20%; di
 .academy-grid .lead { font-style: normal; font-family: var(--font-body); font-size: 1.1rem; color: var(--on-dark); margin-bottom: 16px; }
 .academy-grid .muted { color: var(--on-dark-muted); line-height: 1.6; }
 .academy-grid .btn { margin-top: 26px; }
-.academy-art {
-  aspect-ratio: 4 / 3; border-radius: var(--radius); border: 1px solid var(--sea);
-  background: radial-gradient(90% 90% at 50% 30%, rgba(33,178,198,0.18), transparent 70%), linear-gradient(180deg, #141417, #0b0b0c);
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
-}
-.academy-art span { font-family: var(--font-display); font-weight: 700; font-size: clamp(2.2rem, 6vw, 4rem); letter-spacing: .12em; color: var(--sea); }
-.academy-art small { font-family: var(--font-display); letter-spacing: .35em; font-size: .78rem; color: var(--on-dark-muted); }
+/* LOGICA logo — wordmark ricreato, bianco, senza sfondo */
+.academy-art { display: flex; align-items: center; justify-content: center; padding: 24px 10px; }
+.logica-logo { text-align: center; color: var(--on-dark); }
+.logica-logo .ll-word { display: inline-flex; align-items: center; font-family: var(--font-display); font-weight: 300; font-size: clamp(2.4rem, 6vw, 3.9rem); line-height: 1; letter-spacing: .3em; text-indent: .3em; }
+.logica-logo .ll-letter { position: relative; }
+.logica-logo .ll-o .ll-leaf { position: absolute; top: 48%; left: 50%; width: 1.18em; height: auto; transform: translate(-50%, -50%) rotate(-40deg); overflow: visible; }
+.logica-logo .ll-o .ll-leaf .blade { fill: var(--on-dark); }
+.logica-logo .ll-o .ll-leaf .vein { stroke: var(--dark); stroke-width: 2.4; fill: none; }
+.logica-logo .ll-sub { margin-top: 1rem; font-family: var(--font-display); font-weight: 300; font-size: clamp(.85rem, 2.2vw, 1.05rem); letter-spacing: .46em; text-indent: .46em; color: var(--on-dark-muted); }
+.logica-logo .ll-sub span { opacity: .55; margin: 0 .2em; }
 
 /* ---------- Contatti ---------- */
 .booking-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 14px; margin-bottom: 50px; }
