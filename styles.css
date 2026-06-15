@@ -355,6 +355,9 @@ img.team-photo { width: 100%; object-fit: cover; object-position: center 20%; di
   .main-nav > a::after { display: none; }
   .nav-cta { margin-top: 16px; text-align: center; }
   .nav-toggle { display: flex; }
+  /* logo centrato nella vista app (header con menu a comparsa) */
+  .header-inner { position: relative; justify-content: flex-end; }
+  .brand { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
 }
 @media (max-width: 760px) {
   .grid-2, .academy-grid { grid-template-columns: 1fr; gap: 32px; }
