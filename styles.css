@@ -217,16 +217,9 @@ img.team-photo { width: 100%; object-fit: cover; object-position: center 20%; di
 .academy-grid .lead { font-style: normal; font-family: var(--font-body); font-size: 1.1rem; color: var(--on-dark); margin-bottom: 16px; }
 .academy-grid .muted { color: var(--on-dark-muted); line-height: 1.6; }
 .academy-grid .btn { margin-top: 26px; }
-/* LOGICA logo — wordmark ricreato, bianco, senza sfondo */
+/* LOGICA logo ufficiale — bianco, sfondo trasparente */
 .academy-art { display: flex; align-items: center; justify-content: center; padding: 24px 10px; }
-.logica-logo { text-align: center; color: var(--on-dark); }
-.logica-logo .ll-word { display: inline-flex; align-items: center; font-family: var(--font-display); font-weight: 300; font-size: clamp(2.4rem, 6vw, 3.9rem); line-height: 1; letter-spacing: .3em; text-indent: .3em; }
-.logica-logo .ll-letter { position: relative; }
-.logica-logo .ll-o .ll-leaf { position: absolute; top: 48%; left: 50%; width: 1.18em; height: auto; transform: translate(-50%, -50%) rotate(-40deg); overflow: visible; }
-.logica-logo .ll-o .ll-leaf .blade { fill: var(--on-dark); }
-.logica-logo .ll-o .ll-leaf .vein { stroke: var(--dark); stroke-width: 2.4; fill: none; }
-.logica-logo .ll-sub { margin-top: 1rem; font-family: var(--font-display); font-weight: 300; font-size: clamp(.85rem, 2.2vw, 1.05rem); letter-spacing: .46em; text-indent: .46em; color: var(--on-dark-muted); }
-.logica-logo .ll-sub span { opacity: .55; margin: 0 .2em; }
+.logica-logo { display: block; width: 100%; max-width: 440px; height: auto; }
 
 /* ---------- Contatti ---------- */
 .booking-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 14px; margin-bottom: 50px; }
