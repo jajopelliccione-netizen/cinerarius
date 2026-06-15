@@ -45,6 +45,9 @@
 
   <link rel="stylesheet" href="styles.css?v=23" />
 
+  <!-- Preload immagine hero (migliora LCP / velocità percepita) -->
+  <link rel="preload" as="image" href="foto/image00018.jpeg" fetchpriority="high" />
+
   <!-- Structured data: local business (two salons) -->
   <script type="application/ld+json">
   {
@@ -113,6 +116,64 @@
           "https://www.tiktok.com/@cinerarius_top_hair",
           "https://www.facebook.com/cinerariustophair/"
         ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- Structured data: FAQ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Dove si trova il barbiere Cinerarius Top Hair a Roma?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Cinerarius Top Hair ha due saloni a Roma: in Largo dei Levii 6 (zona Quadraro) e in Via Lugnano in Teverina 21 (zona Furio Camillo)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Quali sono gli orari di apertura?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Entrambi i saloni sono aperti dal martedì al sabato, dalle 9:00 alle 19:00."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Come posso prenotare un appuntamento?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Puoi prenotare online in pochi click dal sito, tramite l'app, oppure chiamando il salone: 388 458 0628 (Quadraro) o 351 878 7993 (Furio Camillo)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Quali servizi offre Cinerarius Top Hair?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Offriamo taglio uomo, cura e modellatura della barba, rasatura tradizionale e trattamenti dedicati all'immagine dell'uomo, con uno staff qualificato e in costante aggiornamento."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Cinerarius vende prodotti per la cura dell'uomo?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sì, proponiamo la linea SHOCK Male Grooming: olio da barba, paste e cere modellanti, polvere volumizzante, sea salt spray e altri prodotti studiati dai barbieri."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Esiste un'accademia per diventare barbiere?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sì, Logica Academy è la nostra accademia di formazione per barbieri a Roma: un percorso professionale dalle basi alla tecnica avanzata, con certificazione finale."
+        }
       }
     ]
   }
