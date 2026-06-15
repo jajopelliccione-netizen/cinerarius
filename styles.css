@@ -190,6 +190,9 @@ img.team-photo { width: 100%; object-fit: cover; object-position: center 20%; di
 
 /* ---------- Price list ---------- */
 .price-list { max-width: 760px; margin: 0 auto; }
+.price-cat { font-family: var(--font-display); text-transform: uppercase; letter-spacing: .18em; font-size: .92rem; font-weight: 600; color: var(--sea-deep); margin: 40px 0 4px; }
+.price-cat:first-child { margin-top: 0; }
+.price-cat em { font-style: normal; font-family: var(--font-body); font-weight: 400; text-transform: none; letter-spacing: 0; font-size: .8rem; color: var(--muted); }
 .price-row { display: flex; align-items: baseline; gap: 14px; padding: 18px 0; border-bottom: 1px solid var(--line); }
 .p-name { font-family: var(--font-display); text-transform: uppercase; letter-spacing: .06em; font-size: 1.15rem; font-weight: 400; }
 .p-name em { font-style: normal; text-transform: none; font-family: var(--font-body); font-size: .82rem; color: var(--muted); letter-spacing: 0; }
