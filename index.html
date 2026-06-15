@@ -28,7 +28,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="styles.css?v=7" />
+  <link rel="stylesheet" href="styles.css?v=8" />
 </head>
 <body>
 
@@ -42,6 +42,7 @@
       <nav class="main-nav" id="mainNav" aria-label="Navigazione principale">
         <a href="#saloni">Saloni</a>
         <a href="#barbers">Barbers</a>
+        <a href="#gallery">Gallery</a>
         <a href="#servizi">Servizi</a>
         <a href="#shock">SHOCK</a>
         <a href="#academy">Academy</a>
@@ -187,6 +188,37 @@
     </div>
   </section>
 
+  <!-- ====================== GALLERY ====================== -->
+  <section class="section section-alt" id="gallery">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="kicker">Gallery</p>
+        <h2 class="section-title">Dentro Cinerarius</h2>
+        <p class="section-note">Tagli, atmosfera e momenti dai nostri saloni. Tocca una foto per ingrandirla.</p>
+      </div>
+      <div class="gallery-grid" id="galleryGrid">
+        <button class="gallery-item reveal" type="button"><img src="foto/image00001.jpeg" alt="Cinerarius — foto 1" loading="lazy" /></button>
+        <button class="gallery-item reveal" type="button"><img src="foto/image00002.jpeg" alt="Cinerarius — foto 2" loading="lazy" /></button>
+        <button class="gallery-item reveal" type="button"><img src="foto/image00003.jpeg" alt="Cinerarius — foto 3" loading="lazy" /></button>
+        <button class="gallery-item reveal" type="button"><img src="foto/image00004.jpeg" alt="Cinerarius — foto 4" loading="lazy" /></button>
+        <button class="gallery-item reveal" type="button"><img src="foto/image00005.jpeg" alt="Cinerarius — foto 5" loading="lazy" /></button>
+        <button class="gallery-item reveal" type="button"><img src="foto/image00006.jpeg" alt="Cinerarius — foto 6" loading="lazy" /></button>
+        <button class="gallery-item reveal" type="button"><img src="foto/image00007.jpeg" alt="Cinerarius — foto 7" loading="lazy" /></button>
+        <button class="gallery-item reveal" type="button"><img src="foto/image00008.jpeg" alt="Cinerarius — foto 8" loading="lazy" /></button>
+        <button class="gallery-item reveal" type="button"><img src="foto/image00009.jpeg" alt="Cinerarius — foto 9" loading="lazy" /></button>
+        <button class="gallery-item reveal" type="button"><img src="foto/image00010.jpeg" alt="Cinerarius — foto 10" loading="lazy" /></button>
+        <button class="gallery-item reveal" type="button"><img src="foto/image00011.jpeg" alt="Cinerarius — foto 11" loading="lazy" /></button>
+        <button class="gallery-item reveal" type="button"><img src="foto/image00012.jpeg" alt="Cinerarius — foto 12" loading="lazy" /></button>
+        <button class="gallery-item reveal" type="button"><img src="foto/image00013.jpeg" alt="Cinerarius — foto 13" loading="lazy" /></button>
+        <button class="gallery-item reveal" type="button"><img src="foto/image00014.jpeg" alt="Cinerarius — foto 14" loading="lazy" /></button>
+        <button class="gallery-item reveal" type="button"><img src="foto/image00015.jpeg" alt="Cinerarius — foto 15" loading="lazy" /></button>
+        <button class="gallery-item reveal" type="button"><img src="foto/image00016.jpeg" alt="Cinerarius — foto 16" loading="lazy" /></button>
+        <button class="gallery-item reveal" type="button"><img src="foto/image00017.jpeg" alt="Cinerarius — foto 17" loading="lazy" /></button>
+        <button class="gallery-item reveal" type="button"><img src="foto/image00018.jpeg" alt="Cinerarius — foto 18" loading="lazy" /></button>
+      </div>
+    </div>
+  </section>
+
   <!-- ====================== SERVIZI ====================== -->
   <section class="section section-alt" id="servizi">
     <div class="container">
@@ -301,6 +333,14 @@
     </div>
   </footer>
 
-  <script src="script.js?v=4"></script>
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Galleria foto">
+    <button class="lb-btn lb-close" id="lbClose" aria-label="Chiudi">&times;</button>
+    <button class="lb-btn lb-prev" id="lbPrev" aria-label="Foto precedente">&#8249;</button>
+    <img class="lb-img" id="lbImg" src="" alt="" />
+    <button class="lb-btn lb-next" id="lbNext" aria-label="Foto successiva">&#8250;</button>
+  </div>
+
+  <script src="script.js?v=8"></script>
 </body>
 </html>
