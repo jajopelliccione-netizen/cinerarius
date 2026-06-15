@@ -238,16 +238,19 @@ img.team-photo { width: 100%; object-fit: cover; object-position: center 20%; di
 .section-dark .btn-ghost:hover { border-color: var(--sea); color: var(--sea); }
 
 /* ---------- Academy (dark contrast section) ---------- */
-.section-academy { background: var(--dark); color: var(--on-dark); border-top: 1px solid var(--line); }
-.section-academy .kicker { color: var(--sea); }
-.section-academy .section-title { color: var(--on-dark); margin-bottom: 20px; }
+.section-academy { background: var(--bg); color: var(--ink); }
+.section-academy .kicker { color: var(--sea-deep); }
+.section-academy .section-title { color: var(--ink); margin-bottom: 20px; }
 .academy-grid { align-items: center; }
-.academy-grid .lead { font-style: normal; font-family: var(--font-body); font-size: 1.1rem; color: var(--on-dark); margin-bottom: 16px; }
-.academy-grid .muted { color: var(--on-dark-muted); line-height: 1.6; }
+.academy-grid .lead { font-style: normal; font-family: var(--font-body); font-size: 1.1rem; color: var(--ink); margin-bottom: 16px; }
+.academy-grid .muted { color: var(--muted); line-height: 1.6; }
 .academy-grid .btn { margin-top: 26px; }
 /* LOGICA logo ufficiale — bianco, sfondo trasparente */
-.academy-art { display: flex; align-items: center; justify-content: center; padding: 24px 10px; }
-.logica-logo { display: block; width: 100%; max-width: 440px; height: auto; }
+.academy-art {
+  display: flex; align-items: center; justify-content: center; padding: 64px 40px;
+  background: var(--dark); border-radius: var(--radius); box-shadow: 0 22px 50px rgba(12,12,13,0.14);
+}
+.logica-logo { display: block; width: 100%; max-width: 360px; height: auto; }
 
 /* ---------- Contatti ---------- */
 .booking-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 14px; margin-bottom: 50px; }
