@@ -224,7 +224,7 @@ a { color: inherit; text-decoration: none; transition: color .25s var(--ease); }
 .booking-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 14px; margin-bottom: 50px; }
 .booking-chip { font-family: var(--font-display); text-transform: uppercase; letter-spacing: .14em; font-size: .82rem; padding: 12px 26px; border: 1px solid var(--line-2); border-radius: 999px; color: var(--ink); background: #fff; transition: border-color .25s var(--ease), color .25s var(--ease), background .25s var(--ease); }
 .booking-chip:hover { border-color: var(--sea); color: #fff; background: var(--sea); }
-.contact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.contact-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; max-width: 760px; margin: 0 auto; }
 .contact-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 30px; box-shadow: 0 10px 30px rgba(12,12,13,.04); }
 .contact-card h3 { font-family: var(--font-display); text-transform: uppercase; letter-spacing: .06em; font-size: 1.3rem; font-weight: 600; margin-bottom: 14px; }
 .contact-card p { margin: 6px 0; }
