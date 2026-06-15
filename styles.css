@@ -102,7 +102,7 @@ a { color: inherit; text-decoration: none; transition: color .25s var(--ease); }
 .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
 /* ---------- Hero ---------- */
-.hero { position: relative; min-height: 100vh; min-height: 100svh; display: flex; align-items: center; overflow: hidden; background: var(--bg); }
+.hero { position: relative; min-height: 100vh; min-height: 100svh; display: flex; align-items: center; overflow: hidden; background: var(--dark); color: var(--on-dark); }
 /* scrolling gallery photos behind the hero */
 .hero-slides { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
 .hero-slide {
@@ -124,18 +124,20 @@ a { color: inherit; text-decoration: none; transition: color .25s var(--ease); }
 .hero-bg {
   position: absolute; inset: 0; z-index: 1;
   background:
-    radial-gradient(120% 90% at 85% 0%, rgba(33,178,198,0.10), transparent 55%),
-    linear-gradient(rgba(255,255,255,0.82), rgba(255,255,255,0.82));
+    radial-gradient(120% 90% at 85% 0%, rgba(33,178,198,0.18), transparent 55%),
+    linear-gradient(rgba(12,12,13,0.80), rgba(12,12,13,0.80));
 }
 .hero-inner { position: relative; z-index: 2; padding: 120px 24px 100px; }
-.eyebrow { font-family: var(--font-display); text-transform: uppercase; letter-spacing: .35em; font-size: .78rem; color: var(--sea-deep); margin-bottom: 24px; }
-.hero-title { font-family: var(--font-display); font-weight: 600; text-transform: uppercase; font-size: clamp(2.8rem, 8vw, 6.2rem); line-height: .98; letter-spacing: .01em; color: var(--ink); }
+.eyebrow { font-family: var(--font-display); text-transform: uppercase; letter-spacing: .35em; font-size: .78rem; color: var(--sea); margin-bottom: 24px; }
+.hero-title { font-family: var(--font-display); font-weight: 600; text-transform: uppercase; font-size: clamp(2.8rem, 8vw, 6.2rem); line-height: .98; letter-spacing: .01em; color: var(--on-dark); }
 .hero-title .accent { color: var(--sea); }
-.hero-sub { color: var(--muted); font-size: 1.05rem; max-width: 540px; margin: 28px 0 38px; }
+.hero-sub { color: var(--on-dark-muted); font-size: 1.05rem; max-width: 540px; margin: 28px 0 38px; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; }
-.hero-meta { display: flex; flex-wrap: wrap; gap: 28px; margin-top: 54px; font-size: .82rem; color: var(--muted); letter-spacing: .04em; }
+.hero .btn-ghost { border-color: var(--line-dark); color: var(--on-dark); }
+.hero .btn-ghost:hover { border-color: var(--sea); color: var(--sea); }
+.hero-meta { display: flex; flex-wrap: wrap; gap: 28px; margin-top: 54px; font-size: .82rem; color: var(--on-dark-muted); letter-spacing: .04em; }
 .hero-meta span:first-child { color: var(--sea); letter-spacing: .2em; }
-.scroll-cue { position: absolute; bottom: 26px; left: 50%; transform: translateX(-50%); font-size: 1.6rem; color: var(--muted); z-index: 3; animation: bob 2s infinite var(--ease); }
+.scroll-cue { position: absolute; bottom: 26px; left: 50%; transform: translateX(-50%); font-size: 1.6rem; color: var(--on-dark-muted); z-index: 3; animation: bob 2s infinite var(--ease); }
 @keyframes bob { 0%,100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, 8px); } }
 
 /* ---------- Sections ---------- */
@@ -224,6 +226,26 @@ img.team-photo { width: 100%; object-fit: cover; object-position: center 20%; di
 .product-card p { color: var(--muted); font-size: .92rem; margin-top: 8px; }
 .product-cta { display: inline-block; margin-top: 16px; font-family: var(--font-display); text-transform: uppercase; letter-spacing: .1em; font-size: .78rem; color: var(--sea-deep); transition: gap .25s var(--ease); }
 .product-card:hover .product-cta { color: var(--sea); }
+
+/* ---------- Sezioni scure (nero) ---------- */
+.section-dark { background: var(--dark); color: var(--on-dark); }
+.section-dark .section-title { color: var(--on-dark); }
+.section-dark .kicker { color: var(--sea); }
+.section-dark .section-note,
+.section-dark .muted,
+.section-dark .address { color: var(--on-dark-muted); }
+/* card saloni su sfondo scuro */
+.section-dark .salon-card { background: var(--dark-2); border-color: var(--line-dark); box-shadow: 0 16px 44px rgba(0,0,0,.45); }
+.section-dark .salon-card h3 { color: var(--on-dark); }
+.section-dark .salon-card a:hover { color: var(--sea); }
+.section-dark .salon-photo { border-bottom-color: var(--line-dark); }
+.section-dark .info-list span { color: var(--sea); }
+.section-dark .badge { color: var(--sea); border-color: var(--sea); }
+/* gallery su sfondo scuro */
+.section-dark .gallery-item { background: var(--dark-2); }
+/* bottoni outline su scuro */
+.section-dark .btn-ghost { border-color: var(--line-dark); color: var(--on-dark); }
+.section-dark .btn-ghost:hover { border-color: var(--sea); color: var(--sea); }
 
 /* ---------- Academy (dark contrast section) ---------- */
 .section-academy { background: var(--dark); color: var(--on-dark); }
