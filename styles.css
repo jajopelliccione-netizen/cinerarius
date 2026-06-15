@@ -279,6 +279,9 @@ img.team-photo { width: 100%; object-fit: cover; object-position: center 20%; di
 .footer-logo { height: 40px; width: auto; opacity: .95; }
 .footer-tag { font-family: var(--font-serif); font-style: italic; color: var(--sea); font-size: 1.1rem; }
 .footer-legal, .footer-copy { font-size: .8rem; color: var(--on-dark-muted); letter-spacing: .03em; }
+.footer-socials { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 2px 0 4px; }
+.footer-socials a { font-family: var(--font-display); text-transform: uppercase; letter-spacing: .12em; font-size: .76rem; padding: 8px 18px; border: 1px solid var(--line-dark); border-radius: 999px; color: var(--on-dark-muted); transition: color .25s var(--ease), border-color .25s var(--ease), background .25s var(--ease); }
+.footer-socials a:hover { color: #fff; border-color: var(--sea); background: var(--sea); }
 
 /* ---------- Gallery ---------- */
 .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
