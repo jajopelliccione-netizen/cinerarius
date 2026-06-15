@@ -82,6 +82,22 @@
       open(imgs.indexOf(item));
     });
 
+    // Expand / collapse gallery (mostra solo alcune foto, poi tutte)
+    var moreBtn = document.getElementById("galleryMore");
+    if (moreBtn) {
+      var LIMIT = 8;
+      if (imgs.length > LIMIT) {
+        grid.classList.add("collapsed");
+        moreBtn.hidden = false;
+        moreBtn.addEventListener("click", function () {
+          var collapsed = grid.classList.toggle("collapsed");
+          moreBtn.setAttribute("aria-expanded", collapsed ? "false" : "true");
+          moreBtn.textContent = collapsed ? "Mostra tutte le foto" : "Mostra meno";
+          if (collapsed) grid.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      }
+    }
+
     document.getElementById("lbClose").addEventListener("click", close);
     document.getElementById("lbNext").addEventListener("click", function () { show(current + 1); });
     document.getElementById("lbPrev").addEventListener("click", function () { show(current - 1); });

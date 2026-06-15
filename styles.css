@@ -293,6 +293,9 @@ img.team-photo { width: 100%; object-fit: cover; object-position: center 20%; di
 .gallery-item:hover img { transform: scale(1.07); }
 .gallery-item:hover::after { background: rgba(12,12,13,0.12); }
 .gallery-item:focus-visible { outline: 3px solid var(--sea); outline-offset: 2px; }
+/* galleria espandibile: mostra solo le prime foto finché non si espande */
+.gallery-grid.collapsed .gallery-item:nth-child(n+9) { display: none; }
+@media (max-width: 760px) { .gallery-grid.collapsed .gallery-item:nth-child(n+7) { display: none; } }
 
 /* ---------- Lightbox ---------- */
 .lightbox {
