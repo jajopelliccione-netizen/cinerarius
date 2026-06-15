@@ -197,7 +197,9 @@ img.team-photo { width: 100%; object-fit: cover; object-position: center 20%; di
 .p-name { font-family: var(--font-display); text-transform: uppercase; letter-spacing: .06em; font-size: 1.15rem; font-weight: 400; }
 .p-name em { font-style: normal; text-transform: none; font-family: var(--font-body); font-size: .82rem; color: var(--muted); letter-spacing: 0; }
 .p-dots { flex: 1; border-bottom: 1px dotted var(--line-2); transform: translateY(-4px); }
-.p-price { font-family: var(--font-display); color: var(--sea-deep); font-size: 1.15rem; letter-spacing: .04em; white-space: nowrap; }
+.p-price { font-family: var(--font-display); color: var(--sea-deep); font-size: 1.15rem; letter-spacing: .04em; white-space: nowrap; min-width: 52px; text-align: right; }
+.p-dur { font-family: var(--font-body); font-size: .78rem; color: var(--muted); letter-spacing: 0; white-space: nowrap; }
+.p-loc { font-style: normal; font-family: var(--font-body); font-size: .6rem; text-transform: uppercase; letter-spacing: .12em; color: var(--sea-deep); border: 1px solid var(--sea); border-radius: 999px; padding: 2px 7px; margin-left: 8px; white-space: nowrap; }
 
 /* ---------- SHOCK products ---------- */
 .product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
