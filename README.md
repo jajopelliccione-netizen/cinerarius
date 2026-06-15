@@ -18,8 +18,8 @@ assets/         Logo (bianco / nero / oro) + favicon
 
 - **Foto reali**: saloni, barbieri e prodotti usano placeholder grafici. Sostituire con immagini reali
   nelle sezioni `.salon-photo`, `.team-photo`, `.product-art`.
-- **Link prenotazione**: i pulsanti Wegest / Treatwell / Uala in sezione Contatti hanno `href="#"`.
-  Inserire gli URL reali (attributo `data-platform`).
+- **Prenotazioni**: tutti i pulsanti "Prenota" puntano già al sistema di prenotazione online
+  (Wegest, `id_punto=2786`). Per cambiarlo basta aggiornare l'URL nei link `Prenota`.
 - **Social**: i link Instagram / TikTok / Facebook hanno `href="#"`. Inserire gli URL reali.
 
 ## Sviluppo locale
