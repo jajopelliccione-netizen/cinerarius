@@ -212,10 +212,10 @@ img.team-photo { width: 100%; object-fit: cover; object-position: center 20%; di
 /* ---------- Academy (dark contrast section) ---------- */
 .section-academy { background: var(--dark); color: var(--on-dark); border-top: 1px solid var(--line); }
 .section-academy .kicker { color: var(--sea); }
-.section-academy .section-title { color: var(--on-dark); }
+.section-academy .section-title { color: var(--on-dark); margin-bottom: 20px; }
 .academy-grid { align-items: center; }
-.academy-grid .lead { font-style: normal; font-family: var(--font-body); font-size: 1.1rem; color: var(--on-dark); }
-.academy-grid .muted { color: var(--on-dark-muted); }
+.academy-grid .lead { font-style: normal; font-family: var(--font-body); font-size: 1.1rem; color: var(--on-dark); margin-bottom: 16px; }
+.academy-grid .muted { color: var(--on-dark-muted); line-height: 1.6; }
 .academy-grid .btn { margin-top: 26px; }
 .academy-art {
   aspect-ratio: 4 / 3; border-radius: var(--radius); border: 1px solid var(--sea);
