@@ -157,6 +157,7 @@ a { color: inherit; text-decoration: none; transition: color .25s var(--ease); }
   border-bottom: 1px solid var(--line);
 }
 .salon-photo::before { content: attr(data-label); font-family: var(--font-display); text-transform: uppercase; letter-spacing: .2em; font-size: .9rem; color: var(--muted); }
+img.salon-photo { width: 100%; height: 240px; object-fit: cover; object-position: center; display: block; padding: 0; }
 .salon-body { padding: 26px 26px 28px; }
 .salon-body h3 { font-family: var(--font-display); text-transform: uppercase; letter-spacing: .06em; font-size: 1.5rem; font-weight: 600; display: flex; align-items: center; gap: 12px; }
 .badge { font-family: var(--font-body); font-size: .62rem; letter-spacing: .14em; text-transform: uppercase; color: var(--sea-deep); border: 1px solid var(--sea); padding: 3px 9px; border-radius: 999px; }
@@ -180,6 +181,7 @@ a { color: inherit; text-decoration: none; transition: color .25s var(--ease); }
   transition: border-color .35s var(--ease), transform .35s var(--ease);
 }
 .team-photo::before { content: attr(data-initials); font-family: var(--font-display); font-weight: 600; font-size: 2.4rem; letter-spacing: .05em; color: var(--sea); }
+img.team-photo { width: 100%; object-fit: cover; object-position: center 20%; display: block; padding: 0; }
 .team-card:hover .team-photo { border-color: var(--sea); transform: translateY(-4px); }
 .team-card h3 { font-family: var(--font-display); text-transform: uppercase; letter-spacing: .05em; font-size: 1.18rem; font-weight: 500; }
 .team-card h3 em { font-style: italic; font-family: var(--font-serif); text-transform: none; color: var(--sea-deep); }
