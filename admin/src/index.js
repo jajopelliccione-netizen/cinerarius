@@ -34,11 +34,10 @@ async function api(request, env, url) {
   const path = url.pathname;
   const method = request.method;
 
-  if (method === "OPTIONS") return cors(new Response(null, { status: 204 }));
+  if (method === "OPTIONS") return new Response(null, { status: 204 });
 
   if (path === "/api/login" && method === "POST") return login(request, env);
   if (path === "/api/logout" && method === "POST") return logout(request, env);
-  if (path === "/api/register" && method === "POST") return publicRegister(request, env);
 
   // ---- protette ----
   const user = await getSessionUser(request, env);
@@ -49,10 +48,6 @@ async function api(request, env, url) {
 
   // se deve cambiare password, blocca tutto il resto
   if (user.must_change) return json({ error: "Devi prima cambiare la password", must_change: true }, 403);
-
-  if (path === "/api/registrations" && method === "GET") return listRegistrations(env, user);
-  const rm = path.match(/^\/api\/registrations\/(\d+)$/);
-  if (rm && method === "DELETE") return deleteRegistration(env, user, rm[1]);
 
   if (path === "/api/users" && method === "GET") return listUsers(env, user);
   if (path === "/api/users" && method === "POST") return createUser(request, env, user);
@@ -82,16 +77,6 @@ async function logout(request, env) {
   return json({ ok: true }, 200, { "Set-Cookie": clearCookie() });
 }
 
-async function publicRegister(request, env) {
-  const b = await readJson(request);
-  const nome = cut(b.nome, 120), cognome = cut(b.cognome, 120), email = cut(b.email, 200);
-  const tel = cut(b.tel, 60), ruolo = cut(b.ruolo, 120), msg = cut(b.msg, 2000), source = cut(b.source || "sito", 60);
-  if (!nome && !email && !tel) return cors(json({ error: "Dati insufficienti" }, 400));
-  await env.DB.prepare("INSERT INTO registrations (nome,cognome,email,tel,ruolo,msg,source,created_at) VALUES (?,?,?,?,?,?,?,?)")
-    .bind(nome, cognome, email, tel, ruolo, msg, source, Date.now()).run();
-  return cors(json({ ok: true }));
-}
-
 async function changePassword(request, env, user) {
   const b = await readJson(request);
   const np = (b.new_password || "").toString();
@@ -106,20 +91,9 @@ async function changePassword(request, env, user) {
   return json({ ok: true });
 }
 
-async function listRegistrations(env, actor) {
-  if (!can(actor, "registrations")) return json({ error: "Permesso negato" }, 403);
-  const r = await env.DB.prepare("SELECT * FROM registrations ORDER BY created_at DESC").all();
-  return json({ rows: r.results || [], count: (r.results || []).length });
-}
-async function deleteRegistration(env, actor, id) {
-  if (!can(actor, "registrations")) return json({ error: "Permesso negato" }, 403);
-  await env.DB.prepare("DELETE FROM registrations WHERE id=?").bind(parseInt(id, 10)).run();
-  return json({ ok: true });
-}
-
 async function listUsers(env, actor) {
   if (!can(actor, "users")) return json({ error: "Permesso negato" }, 403);
-  const r = await env.DB.prepare("SELECT id,email,name,role,must_change,perm_registrations,perm_users,created_at FROM users ORDER BY created_at DESC").all();
+  const r = await env.DB.prepare("SELECT id,email,name,role,must_change,perm_users,created_at FROM users ORDER BY created_at DESC").all();
   return json({ users: r.results || [], me: actor.id });
 }
 async function createUser(request, env, actor) {
@@ -133,12 +107,11 @@ async function createUser(request, env, actor) {
   if (!emailValid(email)) return json({ error: "Email non valida" }, 400);
   if (pw.length < 8) return json({ error: "La password provvisoria deve avere almeno 8 caratteri" }, 400);
   const must = b.must_change === false ? 0 : 1;
-  const pr = role === "admin" ? 1 : (b.perm_registrations ? 1 : 0);
   const pu = role === "admin" ? 1 : (b.perm_users ? 1 : 0);
   const k = await hashPassword(pw);
   try {
-    await env.DB.prepare("INSERT INTO users (email,name,pass_hash,pass_salt,role,must_change,perm_registrations,perm_users,created_at,created_by) VALUES (?,?,?,?,?,?,?,?,?,?)")
-      .bind(email, name, k.hash, k.salt, role, must, pr, pu, Date.now(), actor.id).run();
+    await env.DB.prepare("INSERT INTO users (email,name,pass_hash,pass_salt,role,must_change,perm_users,created_at,created_by) VALUES (?,?,?,?,?,?,?,?,?)")
+      .bind(email, name, k.hash, k.salt, role, must, pu, Date.now(), actor.id).run();
   } catch (e) {
     return json({ error: "Esiste già un account con questa email" }, 409);
   }
@@ -166,10 +139,9 @@ async function patchUser(request, env, actor, id) {
   if (action === "update") {
     const role = b.role === "admin" ? "admin" : "staff";
     if (role === "admin" && actor.role !== "admin") return json({ error: "Solo un amministratore può assegnare il ruolo admin" }, 403);
-    const pr = role === "admin" ? 1 : (b.perm_registrations ? 1 : 0);
     const pu = role === "admin" ? 1 : (b.perm_users ? 1 : 0);
     const name = b.name != null ? ("" + b.name).trim() : target.name;
-    await env.DB.prepare("UPDATE users SET name=?,role=?,perm_registrations=?,perm_users=? WHERE id=?").bind(name, role, pr, pu, id).run();
+    await env.DB.prepare("UPDATE users SET name=?,role=?,perm_users=? WHERE id=?").bind(name, role, pu, id).run();
     return json({ ok: true });
   }
   return json({ error: "Azione non valida" }, 400);
@@ -193,8 +165,8 @@ async function ensureSeed(env) {
     const email = (env.SEED_EMAIL || "admin@admin.local").toLowerCase();
     const pw = env.SEED_PASSWORD || "changeme123";
     const k = await hashPassword(pw);
-    await env.DB.prepare("INSERT INTO users (email,name,pass_hash,pass_salt,role,must_change,perm_registrations,perm_users,created_at) VALUES (?,?,?,?,?,?,?,?,?)")
-      .bind(email, "Amministratore", k.hash, k.salt, "admin", 1, 1, 1, Date.now()).run();
+    await env.DB.prepare("INSERT INTO users (email,name,pass_hash,pass_salt,role,must_change,perm_users,created_at) VALUES (?,?,?,?,?,?,?,?)")
+      .bind(email, "Amministratore", k.hash, k.salt, "admin", 1, 1, Date.now()).run();
   }
   seeded = true;
 }
@@ -235,12 +207,6 @@ function json(obj, status, headers) {
   return new Response(JSON.stringify(obj), { status, headers: h });
 }
 function html(s) { return new Response(s, { headers: { "content-type": "text/html; charset=utf-8" } }); }
-function cors(resp) {
-  resp.headers.set("Access-Control-Allow-Origin", "*");
-  resp.headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
-  resp.headers.set("Access-Control-Allow-Headers", "Content-Type");
-  return resp;
-}
 async function readJson(request) { try { return await request.json(); } catch (e) { return {}; } }
 function getCookie(request, name) {
   const c = request.headers.get("Cookie") || "";
@@ -249,10 +215,9 @@ function getCookie(request, name) {
 }
 function sessionCookie(token) { return COOKIE + "=" + token + "; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=" + (SESSION_DAYS * 86400); }
 function clearCookie() { return COOKIE + "=; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=0"; }
-function pubUser(u) { return { id: u.id, email: u.email, name: u.name, role: u.role, must_change: u.must_change, perm_registrations: u.perm_registrations, perm_users: u.perm_users }; }
+function pubUser(u) { return { id: u.id, email: u.email, name: u.name, role: u.role, must_change: u.must_change, perm_users: u.perm_users }; }
 function can(u, perm) { return u.role === "admin" || u["perm_" + perm] === 1; }
 function emailValid(e) { return /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e); }
-function cut(v, n) { return (v == null ? "" : ("" + v)).slice(0, n); }
 
 /* ---------------- PWA icon / manifest / SW ---------------- */
 const ICON = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="112" fill="#0e1116"/><g fill="none" stroke="#21b2c6" stroke-width="26" stroke-linecap="round"><circle cx="180" cy="150" r="44"/><circle cx="332" cy="150" r="44"/><path d="M212 182 300 360 M300 182 212 360"/></g><circle cx="256" cy="300" r="16" fill="#21b2c6"/></svg>';
@@ -454,7 +419,7 @@ h1,h2,h3{font-family:"Jost",sans-serif;font-weight:600;letter-spacing:.02em}
 <script>
 (function(){
 "use strict";
-var ME=null, SECTION="registrations";
+var ME=null, SECTION="users";
 var root=document.getElementById("app");
 
 function h(s){return (s==null?"":String(s)).replace(/[&<>"']/g,function(c){return ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[c];});}
@@ -468,7 +433,6 @@ function fmtDate(ms){var d=new Date(ms);try{return d.toLocaleString("it-IT",{day
 
 /* icone */
 var IC={
-  reg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5h6M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><path d="M9 12h6M9 16h4"/></svg>',
   users:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><path d="M16 6.2a3 3 0 0 1 0 5.6M17.5 19a5 5 0 0 0-3-4.6"/></svg>',
   acc:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.4"/><path d="M5.5 19.5a6.5 6.5 0 0 1 13 0"/></svg>',
   out:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 17l5-5-5-5M20 12H9M11 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h5"/></svg>'
@@ -548,7 +512,6 @@ function renderChange(){
 /* ============ APP SHELL ============ */
 function navItems(){
   var items=[];
-  if(can("registrations")) items.push({k:"registrations",t:"Iscrizioni",i:IC.reg});
   if(can("users")) items.push({k:"users",t:"Accessi",i:IC.users});
   items.push({k:"account",t:"Account",i:IC.acc});
   return items;
@@ -593,45 +556,11 @@ function renderApp(){
 function loadSection(){
   var v=el("view");
   v.innerHTML='<div class="card" style="text-align:center"><span class="spin"></span></div>';
-  if(SECTION==="registrations") return viewRegistrations(v);
   if(SECTION==="users") return viewUsers(v);
   if(SECTION==="account") return viewAccount(v);
 }
 
 /* ============ ISCRIZIONI ============ */
-function viewRegistrations(v){
-  api("GET","/api/registrations").then(function(res){
-    if(!res.ok){v.innerHTML='<div class="card"><p class="muted">'+h(res.data.error||"Errore")+'</p></div>';return;}
-    var rows=res.data.rows||[];
-    var head='<div class="head between"><div><p class="eyebrow">Dal sito</p><h1 class="title mt16">Iscrizioni</h1></div>'+
-             '<span class="count">'+rows.length+' totali</span></div>';
-    if(!rows.length){ v.innerHTML=head+'<div class="card"><div class="empty">Ancora nessuna iscrizione.</div></div>'; return; }
-    var body=rows.map(function(r){
-      var contacts=[r.email,r.tel].filter(Boolean).map(h).join("<br/>");
-      var nome=h([r.nome,r.cognome].filter(Boolean).join(" "))||"—";
-      var note=h(r.ruolo||r.msg||"")||"—";
-      return '<tr>'+
-        '<td data-label="Data">'+h(fmtDate(r.created_at))+'</td>'+
-        '<td data-label="Nome" class="strong">'+nome+'</td>'+
-        '<td data-label="Contatti">'+(contacts||"—")+'</td>'+
-        '<td data-label="Ruolo / Note">'+note+'</td>'+
-        '<td data-label="" class="actions"><button class="btn btn-danger btn-sm" data-del="'+r.id+'">Elimina</button></td>'+
-      '</tr>';
-    }).join("");
-    v.innerHTML=head+'<div class="card"><table class="tbl"><thead><tr>'+
-      '<th>data</th><th>nome</th><th>contatti</th><th>ruolo / note</th><th></th></tr></thead><tbody>'+body+'</tbody></table></div>';
-    Array.prototype.forEach.call(v.querySelectorAll("[data-del]"),function(btn){
-      btn.onclick=function(){
-        if(!confirm("Eliminare questa iscrizione? L'operazione è irreversibile.")) return;
-        btn.disabled=true;btn.innerHTML='<span class="spin"></span>';
-        api("DELETE","/api/registrations/"+btn.getAttribute("data-del")).then(function(r){
-          if(r.ok) viewRegistrations(v); else {alert(r.data.error||"Errore");btn.disabled=false;btn.textContent="Elimina";}
-        });
-      };
-    });
-  });
-}
-
 /* ============ ACCESSI (UTENTI) ============ */
 function viewUsers(v){
   api("GET","/api/users").then(function(res){
@@ -650,7 +579,6 @@ function viewUsers(v){
         '<div class="field"><label>Ruolo</label><select id="nu_role"><option value="staff">Staff (permessi su misura)</option><option value="admin">Amministratore (tutti i permessi)</option></select></div>'+
       '</div>'+
       '<div class="field" id="nu_perms_wrap"><label>Permessi</label><div class="chips">'+
-        '<label><input type="checkbox" id="nu_p_reg"/> Iscrizioni</label>'+
         '<label><input type="checkbox" id="nu_p_users"/> Accessi (utenti)</label>'+
       '</div></div>'+
       '<div class="field"><label class="chips"><span style="display:inline-flex;gap:8px;align-items:center;border:1px solid var(--line);border-radius:40px;padding:9px 14px"><input type="checkbox" id="nu_must" checked/> Deve cambiare password al primo accesso</span></label></div>'+
@@ -662,7 +590,6 @@ function viewUsers(v){
       var badges=[];
       badges.push('<span class="pill '+(u.role==="admin"?"admin":"role")+'">'+(u.role==="admin"?"Admin":"Staff")+'</span>');
       if(u.role!=="admin"){
-        badges.push('<span class="pill '+(u.perm_registrations?"on":"")+'">Iscrizioni</span>');
         badges.push('<span class="pill '+(u.perm_users?"on":"")+'">Accessi</span>');
       }
       if(u.must_change) badges.push('<span class="pill">Deve cambiare pw</span>');
@@ -685,7 +612,7 @@ function viewUsers(v){
       var err=el("nu_err"), ok=el("nu_ok"); err.classList.remove("show"); ok.classList.remove("show");
       var payload={
         name:el("nu_name").value.trim(), email:el("nu_email").value.trim(), password:el("nu_pw").value,
-        role:roleSel.value, perm_registrations:el("nu_p_reg").checked, perm_users:el("nu_p_users").checked,
+        role:roleSel.value, perm_users:el("nu_p_users").checked,
         must_change:el("nu_must").checked
       };
       var b=el("nu_btn");b.disabled=true;b.innerHTML='<span class="spin"></span>';

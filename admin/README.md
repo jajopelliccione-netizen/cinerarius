@@ -7,9 +7,11 @@ installabile come **PWA**. Stesso dominio del Worker → niente problemi CORS su
 ```
 admin/
   src/index.js     Worker completo: UI (su /admin) + API (/api/*)
-  schema.sql       Tabelle D1 (users, sessions, registrations)
+  schema.sql       Tabelle D1 (users, sessions)
   wrangler.toml    Config (binding DB, seed admin)
 ```
+
+Sezioni del pannello: **Accessi** (creazione/gestione utenti) e **Account** (cambio password personale).
 
 ## Deploy passo-passo
 
@@ -50,28 +52,14 @@ Su Cloudflare → Workers & Pages → il worker → **Custom Domains/Routes**, e
 | POST | `/api/logout` | sì | logout |
 | GET  | `/api/me` | sì | utente corrente |
 | POST | `/api/change-password` | sì | cambia la propria password |
-| POST | `/api/register` | **pubblico** | invio iscrizione dal sito (CORS aperto) |
-| GET  | `/api/registrations` | perm. iscrizioni | elenco iscrizioni |
-| DELETE | `/api/registrations/:id` | perm. iscrizioni | elimina iscrizione |
 | GET  | `/api/users` | perm. accessi | elenco accessi |
 | POST | `/api/users` | perm. accessi | crea accesso |
 | PATCH | `/api/users/:id` | perm. accessi | `reset` / `force_change` / `update` |
 | DELETE | `/api/users/:id` | perm. accessi | elimina (non te stesso) |
 
-### Inviare iscrizioni dal sito Cinerarius
-Dal form del sito (qualsiasi dominio), POST JSON a `/api/register`:
-
-```js
-fetch("https://admin.cinerariustophairroma.com/api/register", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ nome, cognome, email, tel, ruolo, msg, source: "sito" })
-});
-```
-
 ## Sicurezza
 - Password: PBKDF2-SHA256, 100.000 iterazioni, salt random per utente.
 - Sessioni: token random a 256 bit in tabella `sessions`, cookie `HttpOnly; Secure; SameSite=Lax`, 7 giorni.
-- Ruolo `admin` = accesso completo; `staff` = solo i permessi assegnati (`perm_registrations`, `perm_users`).
+- Ruolo `admin` = accesso completo; `staff` = solo i permessi assegnati (`perm_users`).
 - Se `must_change=1`, ogni azione è bloccata finché l'utente non imposta una nuova password.
 - Gli account sono **gestiti in modo trasparente**: ogni admin (con permesso accessi) vede tutti gli accessi esistenti.
