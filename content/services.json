@@ -1,0 +1,151 @@
+[
+  {
+    "cat": "Taglio",
+    "note": "",
+    "rows": [
+      {
+        "name": "Shampoo & Taglio Uomo",
+        "em": "",
+        "loc": "",
+        "dur": "45 min",
+        "price": "€24"
+      },
+      {
+        "name": "Taglio Deluxe",
+        "em": "(shampoo, massaggio craniale, lozione)",
+        "loc": "",
+        "dur": "60 min",
+        "price": "€35"
+      },
+      {
+        "name": "Taglio Bambino",
+        "em": "(1–10 anni)",
+        "loc": "",
+        "dur": "30 min",
+        "price": "€17"
+      }
+    ]
+  },
+  {
+    "cat": "Barba",
+    "note": "",
+    "rows": [
+      {
+        "name": "Barba Modellata",
+        "em": "",
+        "loc": "",
+        "dur": "30 min",
+        "price": "€15"
+      },
+      {
+        "name": "Barba con Panno Caldo",
+        "em": "",
+        "loc": "",
+        "dur": "45 min",
+        "price": "€20"
+      },
+      {
+        "name": "Barba Deluxe",
+        "em": "(2 panni caldi e lozione)",
+        "loc": "",
+        "dur": "45 min",
+        "price": "€25"
+      }
+    ]
+  },
+  {
+    "cat": "Taglio + Barba",
+    "note": "",
+    "rows": [
+      {
+        "name": "Shampoo & Taglio + Barba Modellata",
+        "em": "",
+        "loc": "",
+        "dur": "60 min",
+        "price": "€35"
+      },
+      {
+        "name": "Shampoo & Taglio + Barba Panno Caldo",
+        "em": "",
+        "loc": "",
+        "dur": "75 min",
+        "price": "€39"
+      },
+      {
+        "name": "Taglio & Barba Deluxe",
+        "em": "",
+        "loc": "",
+        "dur": "105 min",
+        "price": "€50"
+      }
+    ]
+  },
+  {
+    "cat": "Trattamenti & Experience",
+    "note": "",
+    "rows": [
+      {
+        "name": "Trattamento Cute",
+        "em": "",
+        "loc": "",
+        "dur": "30 min",
+        "price": "€20"
+      },
+      {
+        "name": "Check-up Tricologico",
+        "em": "",
+        "loc": "Quadraro",
+        "dur": "45 min",
+        "price": "€47"
+      },
+      {
+        "name": "Cinerarius Experience",
+        "em": "",
+        "loc": "Quadraro",
+        "dur": "165 min",
+        "price": "€120"
+      },
+      {
+        "name": "Solarium",
+        "em": "(doccia solare)",
+        "loc": "Quadraro",
+        "dur": "15 min",
+        "price": "€15"
+      }
+    ]
+  },
+  {
+    "cat": "Servizi Donna",
+    "note": "· Quadraro",
+    "rows": [
+      {
+        "name": "Piega",
+        "em": "(shampoo + piega)",
+        "loc": "",
+        "dur": "30 min",
+        "price": "€20"
+      },
+      {
+        "name": "Taglio + Piega",
+        "em": "",
+        "loc": "",
+        "dur": "90 min",
+        "price": "€40"
+      },
+      {
+        "name": "Colore + Piega",
+        "em": "",
+        "loc": "",
+        "dur": "90 min",
+        "price": "€55"
+      },
+      {
+        "name": "Schiariture",
+        "em": "",
+        "loc": "",
+        "dur": "150 min",
+        "price": "€80"
+      }
+    ]
+  }
+]

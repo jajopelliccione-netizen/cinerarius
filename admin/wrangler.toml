@@ -10,6 +10,11 @@ binding = "DB"
 database_name = "cinerarius_admin"
 database_id = "INCOLLA_QUI_IL_DATABASE_ID"
 
+# --- Workers AI (binding "AI") — gratis, nessuna chiave ---
+# Serve per la bozza automatica delle specialità dei barbieri.
+[ai]
+binding = "AI"
+
 # --- Seed admin iniziale (cambio password forzato al primo accesso) ---
 # Meglio impostarli come secret in produzione:
 #   wrangler secret put SEED_EMAIL
@@ -17,3 +22,11 @@ database_id = "INCOLLA_QUI_IL_DATABASE_ID"
 [vars]
 SEED_EMAIL = "admin@cinerariustophairroma.com"
 SEED_PASSWORD = "Cinerarius!2026"
+# Repo del sito su cui pubblicare le modifiche (Build da Git → deploy automatico)
+GITHUB_REPO = "jajopelliccione-netizen/cinerarius"
+GITHUB_BRANCH = "main"
+# Modello AI (default ok): AI_MODEL = "@cf/meta/llama-3.1-8b-instruct"
+
+# --- Token GitHub (SOLO come secret, mai in chiaro) ---
+# Crea un Fine-grained PAT con permesso "Contents: Read and write" sul repo del sito, poi:
+#   wrangler secret put GITHUB_TOKEN

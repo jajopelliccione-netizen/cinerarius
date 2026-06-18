@@ -1,0 +1,44 @@
+[
+  {
+    "name": "Marco",
+    "role": "Master Barber — Quadraro",
+    "spec": "Taglio · Rasatura · Stile",
+    "img": "assets/team/marco.jpg",
+    "alt": "Marco «Cinerarius»"
+  },
+  {
+    "name": "Alessio",
+    "role": "Senior Barber — Quadraro",
+    "spec": "Forbice · Sfumature",
+    "img": "assets/team/alessio.jpg",
+    "alt": "Alessio"
+  },
+  {
+    "name": "Gabriel",
+    "role": "Barber — Furio Camillo",
+    "spec": "Texture · Skin fade",
+    "img": "assets/team/gabriel.jpg",
+    "alt": "Gabriel"
+  },
+  {
+    "name": "Simone",
+    "role": "Barber — Quadraro",
+    "spec": "Barba · Rasatura",
+    "img": "assets/team/simone.jpg",
+    "alt": "Simone"
+  },
+  {
+    "name": "Kyr",
+    "role": "Senior Stylist — Furio Camillo",
+    "spec": "Colore · Avanguardia",
+    "img": "assets/team/kyr.jpg",
+    "alt": "Kyr"
+  },
+  {
+    "name": "Viero",
+    "role": "Professional Barber — Furio Camillo",
+    "spec": "Taglio · Fade",
+    "img": "assets/team/viero.jpg",
+    "alt": "Viero"
+  }
+]

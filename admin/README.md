@@ -7,11 +7,39 @@ installabile come **PWA**. Stesso dominio del Worker → niente problemi CORS su
 ```
 admin/
   src/index.js     Worker completo: UI (su /admin) + API (/api/*)
+  src/render.js    Render condiviso dei contenuti (riproduce lo stile del sito)
   schema.sql       Tabelle D1 (users, sessions)
-  wrangler.toml    Config (binding DB, seed admin)
+  wrangler.toml    Config (binding DB + AI, seed admin, repo GitHub)
 ```
 
-Sezioni del pannello: **Accessi** (creazione/gestione utenti) e **Account** (cambio password personale).
+Sezioni del pannello: **Barbieri**, **Listino**, **Gallery** (gestione contenuti del sito),
+**Accessi** (creazione/gestione utenti) e **Account** (cambio password personale).
+
+## Gestione contenuti del sito (Barbieri / Listino / Gallery)
+
+Architettura **Build da Git**: i contenuti vivono in file JSON nel repo del sito
+(`content/barbers.json`, `content/services.json`, `content/gallery.json`) e nel markup
+statico di `index.html` tra dei marker (`<!-- BARBERS:START -->` … `END`).
+
+Quando salvi dal pannello, il Worker:
+1. legge l'`index.html` corrente dal repo via API GitHub;
+2. rigenera **solo** la regione interessata con `src/render.js` → **stile identico** a quello esistente
+   (niente AI che inventa HTML: template fisso riempito con i dati del form);
+3. fa **un commit** (JSON + `index.html` + eventuali foto) sul branch del sito → il deploy
+   (Cloudflare Pages / Vercel) ricostruisce in automatico.
+
+Le foto caricate vengono **ridotte e compresse lato browser** (max 1200px barbieri / 1500px gallery,
+JPEG q82) prima dell'upload, così i commit restano leggeri e il sito veloce.
+
+**AI (Workers AI, gratis):** nella scheda barbiere il bottone ✦ genera una bozza della riga
+"specialità" nello stile del sito a partire da poche parole chiave. Modello di default
+`@cf/meta/llama-3.1-8b-instruct` (override con la var `AI_MODEL`).
+
+Permesso dedicato: **`perm_content`** (gli admin ce l'hanno sempre; assegnabile allo staff).
+
+### Link "Area riservata" nel footer del sito
+Il footer del sito ha un link discreto **Area riservata** → `https://admin.cinerariustophairroma.com/`.
+Assegna quel **Custom Domain** al Worker (vedi sotto), oppure cambia l'`href` nel footer di `index.html`.
 
 ## Deploy passo-passo
 
@@ -31,9 +59,17 @@ wrangler d1 execute cinerarius_admin --remote --file=./schema.sql
 wrangler secret put SEED_EMAIL        # es. admin@cinerariustophairroma.com
 wrangler secret put SEED_PASSWORD     # password iniziale (verrà cambiata al 1° accesso)
 
-# 4) deploy
+# 4) token GitHub per pubblicare i contenuti sul sito (Build da Git)
+#    Crea un Fine-grained PAT (Contents: Read and write) sul repo del sito, poi:
+wrangler secret put GITHUB_TOKEN
+#    Verifica in wrangler.toml: GITHUB_REPO / GITHUB_BRANCH e il binding [ai].
+
+# 5) deploy
 wrangler deploy
 ```
+
+> Se aggiorni un DB **già esistente** (creato prima della gestione contenuti), aggiungi la colonna:
+> `wrangler d1 execute cinerarius_admin --remote --command "ALTER TABLE users ADD COLUMN perm_content INTEGER NOT NULL DEFAULT 0; UPDATE users SET perm_content=1 WHERE role='admin';"`
 
 Apri poi `https://<tuo-worker>.workers.dev/admin` (o il dominio/route che assegni).
 
@@ -56,6 +92,9 @@ Su Cloudflare → Workers & Pages → il worker → **Custom Domains/Routes**, e
 | POST | `/api/users` | perm. accessi | crea accesso |
 | PATCH | `/api/users/:id` | perm. accessi | `reset` / `force_change` / `update` |
 | DELETE | `/api/users/:id` | perm. accessi | elimina (non te stesso) |
+| GET  | `/api/content/:type` | perm. contenuti | legge `barbers` / `services` / `gallery` |
+| PUT  | `/api/content/:type` | perm. contenuti | salva + commit su GitHub (foto incluse) |
+| POST | `/api/ai/draft` | perm. contenuti | bozza AI della specialità barbiere |
 
 ## Sicurezza
 - Password: PBKDF2-SHA256, 100.000 iterazioni, salt random per utente.
