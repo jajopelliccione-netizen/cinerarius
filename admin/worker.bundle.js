@@ -346,7 +346,7 @@ async function ghReq(env, method, path, body) {
 async function ghGetFile(env, filePath) {
   const branch = env.GITHUB_BRANCH || "main";
   const url = "https://api.github.com/repos/" + env.GITHUB_REPO + "/contents/" + encodeURI(filePath) + "?ref=" + encodeURIComponent(branch) + "&t=" + Date.now();
-  const res = await fetch(url, { headers: ghHeaders(env), cache: "no-store" });
+  const res = await fetch(url, { headers: ghHeaders(env) });
   if (res.status === 404) return null;
   if (!res.ok) throw new Error("GitHub " + res.status + " leggendo " + filePath);
   const data = await res.json();
