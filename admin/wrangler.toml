@@ -20,7 +20,7 @@ binding = "AI"
 #   wrangler secret put SEED_EMAIL
 #   wrangler secret put SEED_PASSWORD
 [vars]
-SEED_EMAIL = "admin@cinerariustophairroma.com"
+SEED_EMAIL = "marco@logica.com"
 SEED_PASSWORD = "Cinerarius!2026"
 # Repo del sito su cui pubblicare le modifiche (Build da Git → deploy automatico)
 GITHUB_REPO = "jajopelliccione-netizen/cinerarius"
