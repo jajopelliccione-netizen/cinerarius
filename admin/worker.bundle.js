@@ -489,6 +489,7 @@ const PAGE = `<!doctype html>
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
+html,body{overflow-x:hidden;max-width:100%}
 body{
   font-family:"Inter",system-ui,sans-serif; color:var(--text); line-height:1.5;
   background:
@@ -540,16 +541,21 @@ h1,h2,h3{font-family:"Oswald",sans-serif;font-weight:600;letter-spacing:.02em}
 /* form */
 .field{margin-bottom:14px}
 .field label{display:block;font-family:"Oswald",sans-serif;text-transform:uppercase;letter-spacing:.12em;font-size:.66rem;color:var(--muted);margin-bottom:7px}
-.field input,.field select{width:100%;background:var(--surface-2);border:1px solid var(--line);border-radius:var(--r-sm);
-  color:var(--text);font-family:inherit;font-size:.95rem;padding:12px 14px;transition:border-color .2s var(--ease),box-shadow .2s var(--ease)}
+.field input,.field select{width:100%;min-width:0;max-width:100%;background:var(--surface-2);border:1px solid var(--line);border-radius:var(--r-sm);
+  color:var(--text);font-family:inherit;font-size:16px;padding:12px 14px;transition:border-color .2s var(--ease),box-shadow .2s var(--ease)}
 .field input:focus,.field select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
 .field input::placeholder{color:var(--muted-2)}
 .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.row>*{min-width:0}
 .chips{display:flex;flex-wrap:wrap;gap:10px}
 .chips label{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:40px;padding:9px 14px;cursor:pointer;
   font-size:.82rem;color:var(--muted);transition:border-color .2s,color .2s,background .2s}
 .chips label:has(input:checked){border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
-.chips input{accent-color:var(--accent)}
+.chips input{accent-color:var(--accent);width:18px;height:18px;flex:0 0 auto;min-width:0}
+.optrow{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:14px;padding:11px 14px;cursor:pointer;color:var(--muted);font-size:.9rem}
+.optrow input{flex:0 0 auto;width:18px;height:18px;accent-color:var(--accent)}
+.optrow span{min-width:0;overflow-wrap:anywhere}
+.optrow:has(input:checked){border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
 .err{color:var(--bad);background:var(--bad-soft);border:1px solid var(--bad-soft);border-radius:var(--r-sm);padding:10px 13px;font-size:.86rem;margin-top:6px;display:none}
 .err.show{display:block}
 .ok{color:var(--accent);font-size:.86rem;margin-top:8px;display:none}
@@ -663,9 +669,27 @@ h1,h2,h3{font-family:"Oswald",sans-serif;font-weight:600;letter-spacing:.02em}
 .gthumb .mv svg{width:13px;height:13px}
 .prow{display:grid;grid-template-columns:1fr 110px 90px auto;gap:10px;align-items:end;border:1px solid var(--line);border-radius:var(--r-sm);padding:12px;background:var(--surface-2);margin-bottom:10px}
 .prow .field{margin:0}
+.prow>*{min-width:0}
+.pill{max-width:100%;overflow-wrap:anywhere}
 .catblock{border:1px solid var(--line);border-radius:var(--r);padding:16px;margin-bottom:16px;background:rgba(12,12,13,.02)}
 .catblock .cathead{display:flex;gap:10px;align-items:end;margin-bottom:12px}
 @media(max-width:860px){ .prow{grid-template-columns:1fr 1fr;}.itemcard .thumb{flex-basis:64px;width:64px;height:80px} }
+@media(max-width:560px){
+  /* tutto a colonna singola e leggibile al 100% su telefono */
+  .prow{grid-template-columns:1fr;gap:12px;padding:13px}
+  .prow .field>.flex{justify-content:flex-start}
+  .itemcard{flex-wrap:wrap;gap:12px;padding:13px}
+  .itemcard .thumb{flex:0 0 60px;width:60px;height:74px}
+  .itemcard .ord{margin-left:auto;flex-direction:row;height:-moz-fit-content;height:fit-content}
+  .itemcard .body{flex:1 1 100%;order:5}
+  .catblock{padding:13px}
+  .catblock .cathead{flex-wrap:wrap;gap:12px}
+  .catblock .cathead .field{flex:1 1 100%!important}
+  .catblock .cathead .iconbtn{align-self:center}
+  .pubbar{padding:10px 13px}
+  .title{font-size:1.3rem}
+  .chips label{flex:1 1 100%}
+}
 </style>
 </head>
 <body>
@@ -876,7 +900,7 @@ function viewUsers(v){
         '<label><input type="checkbox" id="nu_p_users"/> Accessi (utenti)</label>'+
         '<label><input type="checkbox" id="nu_p_content"/> Contenuti (sito)</label>'+
       '</div></div>'+
-      '<div class="field"><label class="chips"><span style="display:inline-flex;gap:8px;align-items:center;border:1px solid var(--line);border-radius:40px;padding:9px 14px"><input type="checkbox" id="nu_must" checked/> Deve cambiare password al primo accesso</span></label></div>'+
+      '<div class="field"><label class="optrow"><input type="checkbox" id="nu_must" checked/><span>Deve cambiare password al primo accesso</span></label></div>'+
       '<div id="nu_err" class="err"></div><div id="nu_ok" class="ok"></div>'+
       '<button id="nu_btn" class="btn btn-primary mt16">Crea accesso</button>'+
     '</div>';
