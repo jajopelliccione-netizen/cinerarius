@@ -8,9 +8,15 @@ installabile come **PWA**. Stesso dominio del Worker → niente problemi CORS su
 admin/
   src/index.js     Worker completo: UI (su /admin) + API (/api/*)
   src/render.js    Render condiviso dei contenuti (riproduce lo stile del sito)
+  worker.bundle.js File UNICO (src/index.js + src/render.js uniti) da incollare
+                   nell'editor Cloudflare se NON usi il terminale
+  build-bundle.mjs Rigenera worker.bundle.js dai sorgenti (solo sviluppo)
   schema.sql       Tabelle D1 (users, sessions)
   wrangler.toml    Config (binding DB + AI, seed admin, repo GitHub)
 ```
+
+> **Senza terminale?** Vedi la sezione "Deploy SOLO dal pannello Cloudflare" più sotto:
+> si incolla `worker.bundle.js` e si creano i binding/secret a clic.
 
 Sezioni del pannello: **Barbieri**, **Listino**, **Gallery** (gestione contenuti del sito),
 **Accessi** (creazione/gestione utenti) e **Account** (cambio password personale).
@@ -79,6 +85,19 @@ Apri poi `https://<tuo-worker>.workers.dev/admin` (o il dominio/route che assegn
 ### Dominio personalizzato (opzionale)
 Su Cloudflare → Workers & Pages → il worker → **Custom Domains/Routes**, es.
 `admin.cinerariustophairroma.com`. Essendo stesso dominio della UI, i cookie di sessione funzionano senza CORS.
+
+## Deploy SOLO dal pannello Cloudflare (senza terminale)
+
+1. **Crea il Worker**: Cloudflare → *Workers & Pages* → *Create* → *Create Worker* → nome `cinerarius-admin` → *Deploy* → *Edit code*. Cancella il codice di esempio e **incolla tutto** il contenuto di `admin/worker.bundle.js` → *Deploy*.
+2. **Database D1**: sezione *Storage & Databases → D1 → Create* → nome `cinerarius_admin`. Apri il DB → *Console* → incolla il contenuto di `schema.sql` → *Execute*.
+3. **Binding**: torna al Worker → *Settings → Bindings → Add*:
+   - *D1 database* → Variable name **`DB`** → scegli `cinerarius_admin`.
+   - *Workers AI* → Variable name **`AI`**.
+4. **Variabili e secret** (Worker → *Settings → Variables and Secrets*):
+   - Plain text: **`GITHUB_REPO`** = `jajopelliccione-netizen/cinerarius`, **`GITHUB_BRANCH`** = `main`.
+   - Secret: **`SEED_EMAIL`**, **`SEED_PASSWORD`**, **`GITHUB_TOKEN`** (token GitHub, vedi sotto).
+5. **Deploy** di nuovo (basta *Deploy* dopo aver aggiunto i binding) e apri `https://<worker>.workers.dev/admin`.
+6. (Opzionale) **Custom Domain** `admin.cinerariustophairroma.com` come sopra.
 
 ## API
 
