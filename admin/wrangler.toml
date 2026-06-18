@@ -1,0 +1,19 @@
+name = "cinerarius-admin"
+main = "src/index.js"
+compatibility_date = "2024-09-23"
+
+# --- Database D1 (binding "DB") ---
+# 1) crea il DB:   wrangler d1 create cinerarius_admin
+# 2) incolla qui sotto il database_id che ti restituisce il comando
+[[d1_databases]]
+binding = "DB"
+database_name = "cinerarius_admin"
+database_id = "INCOLLA_QUI_IL_DATABASE_ID"
+
+# --- Seed admin iniziale (cambio password forzato al primo accesso) ---
+# Meglio impostarli come secret in produzione:
+#   wrangler secret put SEED_EMAIL
+#   wrangler secret put SEED_PASSWORD
+[vars]
+SEED_EMAIL = "admin@cinerariustophairroma.com"
+SEED_PASSWORD = "Cinerarius!2026"
