@@ -514,6 +514,18 @@
       <p class="footer-legal">SHOCK HAIR SRLS™ · P.IVA 17983531009 · Roma</p>
       <p class="footer-copy">© <span id="year"></span> Cinerarius Top Hair. Tutti i diritti riservati.</p>
       <a class="footer-admin" href="https://cinerarius-admin.jajo-pelliccione.workers.dev/admin" target="_blank" rel="nofollow noopener">Area riservata</a>
+      <div style="text-align:center;padding:20px 20px 0;margin-top:22px;border-top:1px solid rgba(255,255,255,.1);">
+        <a href="https://astragency.it" target="_blank" rel="noopener noreferrer"
+           style="display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-family:sans-serif;
+                  background:rgba(124,58,237,.14);border:1.5px solid rgba(124,58,237,.4);border-radius:50px;
+                  padding:7px 16px 7px 8px;box-shadow:0 2px 10px rgba(124,58,237,.15);transition:all .2s;"
+           onmouseover="this.style.background='rgba(124,58,237,.26)';this.style.borderColor='rgba(124,58,237,.7)';this.style.boxShadow='0 4px 18px rgba(124,58,237,.28)';this.style.transform='translateY(-1px)'"
+           onmouseout="this.style.background='rgba(124,58,237,.14)';this.style.borderColor='rgba(124,58,237,.4)';this.style.boxShadow='0 2px 10px rgba(124,58,237,.15)';this.style.transform='translateY(0)'">
+          <img src="https://astragency.it/logo.png" alt="Astra Agency" style="width:24px;height:24px;border-radius:50%;object-fit:cover;flex-shrink:0;display:block;" />
+          <span style="font-size:.76rem;color:rgba(255,255,255,.55);">Sito realizzato da</span>
+          <span style="font-weight:700;color:#a78bfa;font-size:.82rem;letter-spacing:-.01em;">Astra Agency</span>
+        </a>
+      </div>
     </div>
   </footer>
 
@@ -526,5 +538,18 @@
   </div>
 
   <script src="script.js?v=9"></script>
+
+  <!-- Astra analytics (anonimo: nessun cookie, nessun IP, nessun dato personale) -->
+  <script>
+  (function(){
+    try {
+      fetch('https://astra-notify.jacopopelliccione.workers.dev/api/track', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ clientId: 'pqHX4u7FybZVr8ErvscSFWPFJOT2' })
+      }).catch(function(){});
+    } catch(e) {}
+  })();
+  </script>
 </body>
 </html>
