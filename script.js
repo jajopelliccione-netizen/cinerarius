@@ -6,6 +6,17 @@
   var yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
+  // Slide hero secondarie: caricate dopo il primo render (compaiono solo dopo 8s/16s)
+  function loadHeroBgs() {
+    var slides = document.querySelectorAll(".hero-slide[data-bg]");
+    for (var i = 0; i < slides.length; i++) {
+      slides[i].style.backgroundImage = "url('" + slides[i].getAttribute("data-bg") + "')";
+      slides[i].removeAttribute("data-bg");
+    }
+  }
+  if ("requestIdleCallback" in window) requestIdleCallback(loadHeroBgs, { timeout: 3000 });
+  else setTimeout(loadHeroBgs, 1200);
+
   // Header background on scroll
   var header = document.querySelector(".site-header");
   function onScroll() {
